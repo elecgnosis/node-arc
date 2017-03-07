@@ -80,7 +80,7 @@ describe('Arc', function () {
     });
     it('throws an error if the supplied height is not a number', function () {
       const testArc = new Arc();
-      const testHeight = 'x';
+      const testHeight = 'y';
       assert.throws(function () {
         testArc.setOriginalWidth(testHeight);
       }, Error);
