@@ -1,7 +1,22 @@
 export default class Arc {
   constructor(width, height) {
-    this.originalWidth = typeof width === 'number' ? width : 0;
-    this.originalHeight = typeof height === 'number' ? height : 0;
+    if (width) {
+      if (this.validateInputNumber(width)) {
+        this.originalWidth = width;
+      } else {
+        throw new Error(`Input values are not required, but if supplied, they must be positive numbers. Width supplied: ${width}`);
+      }
+    }
+    if (height) {
+      if (this.validateInputNumber(height)) {
+        this.originalHeight = height;
+      } else {
+        throw new Error(`Input values are not required, but if supplied, they must be positive numbers. Height supplied: ${height}`);
+      }
+    }
+  }
+  validateInputNumber(value) {
+    return typeof value === 'number' && value >= 0;
   }
   setOriginalWidth(originalWidth) {
     this.originalWidth = originalWidth;
@@ -23,7 +38,10 @@ export default class Arc {
   }
   calculateGreatestCommonDivisor(x, y) {
     if (typeof x !== 'number' || typeof y !== 'number') {
-      throw new Error('Must supply number parameters', x, y);
+      throw new Error(`Must supply number parameters, x: ${x}, y: ${y}`);
+    }
+    if (x < 0 || y < 0) {
+      throw new Error(`Numbers supplied must be positive, x: ${x}, y: ${y}`);
     }
     if (y === 0) {
       return x;
