@@ -18,11 +18,19 @@ export default class Arc {
   validateInputNumber(value) {
     return typeof value === 'number' && value >= 0;
   }
-  setOriginalWidth(originalWidth) {
-    this.originalWidth = originalWidth;
+  setOriginalWidth(width) {
+    if (this.validateInputNumber(width)) {
+      this.originalWidth = width;
+    } else {
+      throw new Error(`Input values must be positive numbers. Width supplied: ${width}`);
+    }
   }
-  setOriginalHeight(originalHeight) {
-    this.originalHeight = originalHeight;
+  setOriginalHeight(height) {
+    if (this.validateInputNumber(height)) {
+      this.originalHeight = height;
+    } else {
+      throw new Error(`Input value must be positive numbers. Height supplied: ${height}`);
+    }
   }
   calculateAspectRatio() {
     return parseFloat((this.originalWidth / this.originalHeight).toFixed(3));
