@@ -5,13 +5,16 @@
   "main": "arc/arc.js",
   "scripts": {
     "start": "babel arc -d lib && node lib/arc.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --require babel-register arc/arc.spec.js",
     "build": "babel arc -d lib"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "babel-cli": "6.23.0",
-    "babel-preset-env": "1.2.1"
+    "babel-preset-es2017": "6.22.0",
+    "babel-register": "6.23.0",
+    "chai": "3.5.0",
+    "mocha": "3.2.0"
   }
 }
