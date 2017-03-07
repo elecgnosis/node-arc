@@ -15,6 +15,8 @@ export default class Arc {
       }
     }
   }
+  // TODO: Use for all value validation and throw errors from here
+  // constructor, setters, calculateGreatestCommonDivisor
   validateInputNumber(value) {
     return typeof value === 'number' && value >= 0;
   }
