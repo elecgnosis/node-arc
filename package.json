@@ -1,0 +1,12 @@
+{
+  "name": "nativescript-aspect-ratio-calculator",
+  "version": "1.0.0",
+  "description": "Aspect Ratio Calculator",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
