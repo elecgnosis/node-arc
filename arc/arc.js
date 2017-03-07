@@ -5,4 +5,19 @@ export default class Arc {
     this.newWidth = 0;
     this.newHeight = 0;
   }
+  setOriginalWidth(originalWidth) {
+    this.originalWidth = originalWidth;
+  }
+  setOriginalHeight(originalHeight) {
+    this.originalHeight = originalHeight;
+  }
+  calculateNewHeight(newWidth) {
+    return this.calculateAspectRatio() * newWidth;
+  }
+  calculateNewWidth(newHeight) {
+    return this.calculateAspectRatio() * newHeight;
+  }
+  calculateAspectRatio() {
+    return (this.originalHeight / this.originalWidth);
+  }
 }
