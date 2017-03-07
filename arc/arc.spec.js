@@ -65,15 +65,29 @@ describe('Arc', function () {
     });
   });
   describe('#setOriginalWidth(originalWidth)', function () {
-    it('sets the originalWidth to the given value', function () {
+    it('sets the originalWidth to the positive number supplied', function () {
       const testArc = new Arc();
       const testWidth = 10;
       testArc.setOriginalWidth(testWidth);
       assert.strictEqual(testArc.originalWidth, testWidth);
     });
+    it('throws an error if the supplied width is not a number', function () {
+      const testArc = new Arc();
+      const testWidth = 'x';
+      assert.throws(function () {
+        testArc.setOriginalWidth(testWidth);
+      }, Error);
+    });
+    it('throws an error if the supplied height is not a number', function () {
+      const testArc = new Arc();
+      const testHeight = 'x';
+      assert.throws(function () {
+        testArc.setOriginalWidth(testHeight);
+      }, Error);
+    });
   });
   describe('#setOriginalHeight(originalHeight)', function () {
-    it('sets the originalHeight to the given value', function () {
+    it('sets the originalHeight to the positive number supplied', function () {
       const testArc = new Arc();
       const testHeight = 10;
       testArc.setOriginalHeight(testHeight);
