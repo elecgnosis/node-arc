@@ -43,7 +43,7 @@ export default class Arc {
   calculateNewWidth(newHeight) {
     return this.calculateAspectRatio() * newHeight;
   }
-  getAspectRatioText() {
+  getAspectRatioDimensions() {
     const gcd = this.calculateGreatestCommonDivisor(this.originalWidth, this.originalHeight);
     return {
       width: this.originalWidth / gcd,
