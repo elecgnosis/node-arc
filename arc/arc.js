@@ -44,7 +44,11 @@ export default class Arc {
     return this.calculateAspectRatio() * newHeight;
   }
   getAspectRatioText() {
-    return ;
+    const gcd = this.calculateGreatestCommonDivisor(this.originalWidth, this.originalHeight);
+    return {
+      width: this.originalWidth / gcd,
+      height: this.originalHeight / gcd,
+    };
   }
   calculateGreatestCommonDivisor(x, y) {
     if (typeof x !== 'number' || typeof y !== 'number') {
