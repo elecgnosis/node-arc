@@ -3,7 +3,7 @@ import Arc from './arc';
 
 describe('Arc', function () {
   describe('#Arc()', function () {
-    it('should return a new Arc object', function () {
+    it('returns a new Arc object', function () {
       const testArc = new Arc();
       assert.instanceOf(testArc, Arc);
     });
