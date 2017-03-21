@@ -9,9 +9,17 @@ describe('Arc', function () {
       const testArc = new Arc();
       assert.instanceOf(testArc, Arc);
     });
-    it('sets the Arc.inputValidator property', function () {
+    it('sets the inputValidator property', function () {
       const testArc = new Arc();
       assert.isDefined(testArc.inputValidator);
+    });
+    it('declares the originalWidth property', function () {
+      const testArc = new Arc();
+      assert.isUndefined(testArc.originalWidth);
+    });
+    it('declares the originalHeight property', function () {
+      const testArc = new Arc();
+      assert.isUndefined(testArc.originalHeight);
     });
     it('sets the originalWidth to the positive number supplied', function() {
       const testWidth = 1;
@@ -37,24 +45,12 @@ describe('Arc', function () {
         const testArc = new Arc();
         assert.instanceOf(testArc, Arc);
     });
-    it('calls #validateInputNumber() using the supplied width', function () {
-      const testWidth = 1;
-      const mockIV = mock(InputValidator.default);
-      const mockIVExpectation = mockIV.expects('validateInputNumber').withArgs(testWidth);
-
-      const testArc = new Arc();
-
-      assert.isTrue(mockIV.verify());
-    });
-    it('calls #validateInputNumber() using the supplied height', function () {
-      const testHeight = 1;
-      const spyIV = spy(InputValidator, 'validateInputNumber');
-      testArc = new Arc();
-
-      assert.isTrue(spyIV.called);
-    });
   });
   describe('#setOriginalWidth(originalWidth)', function () {
+    it('returns false if no value is supplied', function () {
+      const testArc = new Arc();
+      const result = testArc.setOriginalWidth();
+    });
     it('calls the inputValidator with the value supplied', function () {
       const testWidth = 1;
       const testArc = new Arc();
@@ -63,21 +59,51 @@ describe('Arc', function () {
 
       assert.isTrue(spyIV.calledWith(testWidth));
     });
-    it('sets the value supplied if it passes validation', function () {
+    it('sets the originalWidth to the value supplied if it passes validation', function () {
       const testWidth = 1;
       const testArc = new Arc();
-      const stubIV = spy(testArc.inputValidator, 'validateInputNumber').returns(true);
+      const stubIV = stub(testArc.inputValidator, 'validateInputNumber').returns(true);
       testArc.setOriginalWidth(testWidth);
 
-      assert.strictEqual(spyIV.originalHeight, testWidth);
+      assert.strictEqual(testArc.originalWidth, testWidth);
+    });
+    it('returns true if the value supplied is used to set the originalWidth', function () {
+      const testWidth = 1;
+      const testArc = new Arc();
+      const stubIV = stub(testArc.inputValidator, 'validateInputNumber').returns(true);
+      const result = testArc.setOriginalWidth(testWidth);
+
+      assert.isTrue(result);
     });
   });
   describe('#setOriginalHeight(originalHeight)', function () {
-    it('sets the originalHeight to the positive number supplied', function () {
+    it('returns false if no value is supplied', function () {
       const testArc = new Arc();
-      const testHeight = 10;
+      const result = testArc.setOriginalHeight();
+    });
+    it('calls the inputValidator with the value supplied', function () {
+      const testHeight = 1;
+      const testArc = new Arc();
+      const spyIV = spy(testArc.inputValidator, 'validateInputNumber');
       testArc.setOriginalHeight(testHeight);
+
+      assert.isTrue(spyIV.calledWith(testHeight));
+    });
+    it('sets the originalHeight to the value supplied if it passes validation', function () {
+      const testHeight = 1;
+      const testArc = new Arc();
+      const stubIV = stub(testArc.inputValidator, 'validateInputNumber').returns(true);
+      testArc.setOriginalHeight(testHeight);
+
       assert.strictEqual(testArc.originalHeight, testHeight);
+    });
+    it('returns true if the value supplied is used to set the originalWidth', function () {
+      const testHeight = 1;
+      const testArc = new Arc();
+      const stubIV = stub(testArc.inputValidator, 'validateInputNumber').returns(true);
+      const result = testArc.setOriginalHeight(testHeight);
+
+      assert.isTrue(result);
     });
   });
   describe('#calculateAspectRatio', function () {

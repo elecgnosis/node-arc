@@ -3,21 +3,28 @@ import InputValidator from './inputValidator.js';
 export default class Arc {
   constructor(width, height) {
     this.inputValidator = new InputValidator();
+    this.originalWidth;
+    this.originalHeight;
+
     this.setOriginalWidth(width);
     this.setOriginalHeight(height);
   }
 
   setOriginalWidth(width) {
-    if (this.inputValidator.validateInputNumber(width)) {
+    if (width) {
+      if (this.inputValidator.validateInputNumber(width)) {
         this.originalWidth = width;
         return true;
+      }
     }
     return false;
   }
   setOriginalHeight(height) {
-    if (this.inputValidator.validateInputNumber(height)) {
-      this.originalHeight = height;
-      return true;
+    if (height) {
+      if (this.inputValidator.validateInputNumber(height)) {
+        this.originalHeight = height;
+        return true;
+      }
     }
     return false;
   }
