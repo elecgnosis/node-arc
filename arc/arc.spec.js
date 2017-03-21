@@ -1,5 +1,7 @@
 import { assert } from 'chai';
+import { spy, stub, mock, createStubInstance } from 'sinon';
 import Arc from './arc';
+import * as InputValidator from './inputValidator.js';
 
 describe('Arc', function () {
   describe('#Arc()', function () {
@@ -7,83 +9,67 @@ describe('Arc', function () {
       const testArc = new Arc();
       assert.instanceOf(testArc, Arc);
     });
+    it('sets the Arc.inputValidator property', function () {
+      const testArc = new Arc();
+      assert.isDefined(testArc.inputValidator);
+    });
     it('sets the originalWidth to the positive number supplied', function() {
-      const testWidth = 10;
+      const testWidth = 1;
       const testArc = new Arc(testWidth, null);
       assert.strictEqual(testArc.originalWidth, testWidth);
     });
     it('sets the originalHeight to the positive number supplied', function() {
-      const testHeight = 10;
+      const testHeight = 1;
       const testArc = new Arc(null, testHeight);
       assert.strictEqual(testArc.originalHeight, testHeight);
     });
-    it('throws an error if the supplied width is not a number', function () {
-      const testWidth = 'x';
-      assert.throws(function () {
-        new Arc(testWidth, null);
-      }, Error);
+    it('returns a new Arc object if width but no height is supplied', function () {
+      const testWidth = 1;
+      const testArc = new Arc(testWidth, null);
+      assert.instanceOf(testArc, Arc);
     });
-    it('throws an error if the supplied height is not a number', function () {
-      const testHeight = 'y';
-      assert.throws(function () {
-        new Arc(null, testHeight);
-      }, Error);
+    it('returns a new Arc object if height but no width is supplied', function () {
+      const testHeight = 1;
+      const testArc = new Arc(null, testHeight);
+      assert.instanceOf(testArc, Arc);
     });
-    it('throws an error if the supplied width is less than zero', function () {
-      const testWidth = -1;
-      assert.throws(function () {
-        new Arc(testWidth, null);
-      }, Error);
+    it('returns a new Arc object if neither width nor height are supplied', function () {
+        const testArc = new Arc();
+        assert.instanceOf(testArc, Arc);
     });
-    it('throws an error if the supplied height is less than zero', function () {
-      const testHeight = -1;
-      assert.throws(function () {
-        new Arc(null, testHeight);
-      }, Error);
-    });
-  });
-  describe('#validateInputNumber', function () {
-    it('returns true if the value supplied is a number', function () {
+    it('calls #validateInputNumber() using the supplied width', function () {
+      const testWidth = 1;
+      const mockIV = mock(InputValidator.default);
+      const mockIVExpectation = mockIV.expects('validateInputNumber').withArgs(testWidth);
+
       const testArc = new Arc();
-      const testValue = 0;
-      assert.isTrue(testArc.validateInputNumber(testValue));
+
+      assert.isTrue(mockIV.verify());
     });
-    it('returns true if the value supplied is greater than or equal to 0', function () {
-      const testArc = new Arc();
-      const testValue = 0;
-      assert.isTrue(testArc.validateInputNumber(testValue));
-    });
-    it('returns false if the value supplied is not a number', function () {
-      const testArc = new Arc();
-      const testValue = 'x';
-      assert.isFalse(testArc.validateInputNumber(testValue));
-    });
-    it('returns false if the value supplied is less than zero', function () {
-      const testArc = new Arc();
-      const testValue = -1;
-      assert.isFalse(testArc.validateInputNumber(testValue));
+    it('calls #validateInputNumber() using the supplied height', function () {
+      const testHeight = 1;
+      const spyIV = spy(InputValidator, 'validateInputNumber');
+      testArc = new Arc();
+
+      assert.isTrue(spyIV.called);
     });
   });
   describe('#setOriginalWidth(originalWidth)', function () {
-    it('sets the originalWidth to the positive number supplied', function () {
+    it('calls the inputValidator with the value supplied', function () {
+      const testWidth = 1;
       const testArc = new Arc();
-      const testWidth = 10;
+      const spyIV = spy(testArc.inputValidator, 'validateInputNumber');
       testArc.setOriginalWidth(testWidth);
-      assert.strictEqual(testArc.originalWidth, testWidth);
+
+      assert.isTrue(spyIV.calledWith(testWidth));
     });
-    it('throws an error if the supplied width is not a number', function () {
+    it('sets the value supplied if it passes validation', function () {
+      const testWidth = 1;
       const testArc = new Arc();
-      const testWidth = 'x';
-      assert.throws(function () {
-        testArc.setOriginalWidth(testWidth);
-      }, Error);
-    });
-    it('throws an error if the supplied height is not a number', function () {
-      const testArc = new Arc();
-      const testHeight = 'y';
-      assert.throws(function () {
-        testArc.setOriginalWidth(testHeight);
-      }, Error);
+      const stubIV = spy(testArc.inputValidator, 'validateInputNumber').returns(true);
+      testArc.setOriginalWidth(testWidth);
+
+      assert.strictEqual(spyIV.originalHeight, testWidth);
     });
   });
   describe('#setOriginalHeight(originalHeight)', function () {

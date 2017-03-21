@@ -1,38 +1,25 @@
+import InputValidator from './inputValidator.js';
+
 export default class Arc {
   constructor(width, height) {
-    if (width) {
-      if (this.validateInputNumber(width)) {
-        this.originalWidth = width;
-      } else {
-        throw new Error(`Input values are not required, but if supplied, they must be positive numbers. Width supplied: ${width}`);
-      }
-    }
-    if (height) {
-      if (this.validateInputNumber(height)) {
-        this.originalHeight = height;
-      } else {
-        throw new Error(`Input values are not required, but if supplied, they must be positive numbers. Height supplied: ${height}`);
-      }
-    }
+    this.inputValidator = new InputValidator();
+    this.setOriginalWidth(width);
+    this.setOriginalHeight(height);
   }
-  // TODO: Use for all value validation and throw errors from here
-  // constructor, setters, calculateGreatestCommonDivisor
-  validateInputNumber(value) {
-    return typeof value === 'number' && value >= 0;
-  }
+
   setOriginalWidth(width) {
-    if (this.validateInputNumber(width)) {
-      this.originalWidth = width;
-    } else {
-      throw new Error(`Input values must be positive numbers. Width supplied: ${width}`);
+    if (this.inputValidator.validateInputNumber(width)) {
+        this.originalWidth = width;
+        return true;
     }
+    return false;
   }
   setOriginalHeight(height) {
-    if (this.validateInputNumber(height)) {
+    if (this.inputValidator.validateInputNumber(height)) {
       this.originalHeight = height;
-    } else {
-      throw new Error(`Input value must be positive numbers. Height supplied: ${height}`);
+      return true;
     }
+    return false;
   }
   calculateAspectRatio() {
     return parseFloat((this.originalWidth / this.originalHeight).toFixed(3));
@@ -63,3 +50,5 @@ export default class Arc {
     return this.calculateGreatestCommonDivisor(y, x % y);
   }
 }
+
+module.exports = Arc;
