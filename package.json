@@ -23,6 +23,6 @@
     "sinon": "2.1.0"
   },
   "dependencies": {
-    "inject-loader": "3.0.0-beta4"
+    "inject-loader": "3.0.0"
   }
 }
